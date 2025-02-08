@@ -1,11 +1,15 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { motion } from "framer-motion"
 
 const ArtworkDetail = () => {
   const { id } = useParams()
   const [artwork, setArtwork] = useState(null)
+  const [similarArtworks, setSimilarArtworks] = useState([])
   const mountRef = useRef(null)
 
   useEffect(() => {
@@ -24,6 +28,36 @@ const ArtworkDetail = () => {
 
     fetchArtwork()
   }, [id])
+
+  useEffect(() => {
+    if (artwork) {
+      // Fetch similar artworks (replace with actual API call)
+      const fetchSimilarArtworks = async () => {
+        const mockSimilarArtworks = [
+          {
+            id: 101,
+            title: "Similar Work 1",
+            artist: "Artist A",
+            image: `https://picsum.photos/seed/similar1/400/600`,
+          },
+          {
+            id: 102,
+            title: "Similar Work 2",
+            artist: "Artist B",
+            image: `https://picsum.photos/seed/similar2/400/600`,
+          },
+          {
+            id: 103,
+            title: "Similar Work 3",
+            artist: "Artist C",
+            image: `https://picsum.photos/seed/similar3/400/600`,
+          },
+        ]
+        setSimilarArtworks(mockSimilarArtworks)
+      }
+      fetchSimilarArtworks()
+    }
+  }, [artwork])
 
   useEffect(() => {
     if (!artwork) return
@@ -113,6 +147,28 @@ const ArtworkDetail = () => {
           <button className="bg-white text-black px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors duration-200">
             Add to Collection
           </button>
+        </div>
+      </div>
+      <div className="mt-16">
+        <h2 className="text-3xl font-bold mb-4">Similar Artworks</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {similarArtworks.map((similarArtwork) => (
+            <motion.div key={similarArtwork.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link to={`/artwork/${similarArtwork.id}`} className="block">
+                <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                  <img
+                    src={similarArtwork.image || "/placeholder.svg"}
+                    alt={similarArtwork.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold mb-2">{similarArtwork.title}</h3>
+                    <p className="text-gray-400">{similarArtwork.artist}</p>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>
