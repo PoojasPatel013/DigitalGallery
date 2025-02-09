@@ -1,9 +1,8 @@
-"use client"
 
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Calendar, MapPin, Clock } from "lucide-react"
+import { Calendar, MapPin, Clock, ShoppingCart } from "lucide-react"
 import { Button } from "./ui/Button"
 import { Card, CardContent } from "./ui/Card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/Carousel"
@@ -12,9 +11,10 @@ const Home = () => {
   const mountRef = useRef(null)
   const [featuredArtists, setFeaturedArtists] = useState([])
   const [upcomingExhibitions, setUpcomingExhibitions] = useState([])
+  const [featuredArtworks, setFeaturedArtworks] = useState([])
 
   useEffect(() => {
-    // Fetch featured artists and upcoming exhibitions
+    // Fetch featured artists, upcoming exhibitions, and featured artworks
     const fetchData = async () => {
       // Replace with actual API calls
       const mockFeaturedArtists = [
@@ -68,8 +68,40 @@ const Home = () => {
         },
       ]
 
+      const mockFeaturedArtworks = [
+        {
+          id: 1,
+          title: "Neon Cityscape",
+          artist: "Elena Rodriguez",
+          image: "https://picsum.photos/seed/artwork1/600/400",
+          price: "$1,200",
+        },
+        {
+          id: 2,
+          title: "Pixel Forest",
+          artist: "Marcus Chen",
+          image: "https://picsum.photos/seed/artwork2/600/400",
+          price: "$800",
+        },
+        {
+          id: 3,
+          title: "Digital Waves",
+          artist: "Sarah Johnson",
+          image: "https://picsum.photos/seed/artwork3/600/400",
+          price: "$1,500",
+        },
+        {
+          id: 4,
+          title: "Cybernetic Dreams",
+          artist: "Elena Rodriguez",
+          image: "https://picsum.photos/seed/artwork4/600/400",
+          price: "$1,800",
+        },
+      ]
+
       setFeaturedArtists(mockFeaturedArtists)
       setUpcomingExhibitions(mockExhibitions)
+      setFeaturedArtworks(mockFeaturedArtworks)
     }
 
     fetchData()
@@ -100,6 +132,46 @@ const Home = () => {
                 <Link to="/tickets">Book Tickets</Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Purchase Artwork Section */}
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-12 text-center">Featured Artworks</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredArtworks.map((artwork) => (
+              <motion.div
+                key={artwork.id}
+                whileHover={{ scale: 1.05 }}
+                className="bg-black rounded-lg overflow-hidden shadow-lg"
+              >
+                <img
+                  src={artwork.image || "/placeholder.svg"}
+                  alt={artwork.title}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">{artwork.title}</h3>
+                  <p className="text-gray-400 mb-4">{artwork.artist}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-2xl font-bold">{artwork.price}</span>
+                    <Button className="bg-white text-black hover:bg-gray-200" asChild>
+                      <Link to={`/artwork/${artwork.id}`}>
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Purchase
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Button size="lg" variant="outline" asChild>
+              <Link to="/gallery">View All Artworks</Link>
+            </Button>
           </div>
         </div>
       </section>
