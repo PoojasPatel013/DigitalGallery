@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -7,6 +6,8 @@ import { Button } from "./ui/Button"
 import { Card, CardContent } from "./ui/Card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/Carousel"
 
+const API_URL = "http://localhost:5000/api"
+
 const Home = () => {
   const mountRef = useRef(null)
   const [featuredArtists, setFeaturedArtists] = useState([])
@@ -14,127 +15,64 @@ const Home = () => {
   const [featuredArtworks, setFeaturedArtworks] = useState([])
 
   useEffect(() => {
-    // Fetch featured artists, upcoming exhibitions, and featured artworks
     const fetchData = async () => {
-      // Replace with actual API calls
-      const mockFeaturedArtists = [
-        {
-          id: 1,
-          name: "Elena Rodriguez",
-          specialty: "Digital Surrealism",
-          image: "https://picsum.photos/seed/artist1/400/400",
-          bio: "Creating dreamlike digital landscapes",
-        },
-        {
-          id: 2,
-          name: "Marcus Chen",
-          specialty: "Pixel Art",
-          image: "https://picsum.photos/seed/artist2/400/400",
-          bio: "Merging traditional pixel art with modern themes",
-        },
-        {
-          id: 3,
-          name: "Sarah Johnson",
-          specialty: "Abstract Digital",
-          image: "https://picsum.photos/seed/artist3/400/400",
-          bio: "Exploring emotions through digital abstraction",
-        },
-      ]
+      try {
+        const [artistsRes, exhibitionsRes, artworksRes] = await Promise.all([
+          fetch(`${API_URL}/artists`),
+          fetch(`${API_URL}/exhibitions`),
+          fetch(`${API_URL}/artworks`),
+        ])
 
-      const mockExhibitions = [
-        {
-          id: 1,
-          title: "Future Visions",
-          date: "March 15-30, 2024",
-          location: "Main Gallery Hall",
-          image: "https://picsum.photos/seed/exhibit1/800/400",
-          price: "$25",
-        },
-        {
-          id: 2,
-          title: "Digital Dreams",
-          date: "April 5-20, 2024",
-          location: "East Wing",
-          image: "https://picsum.photos/seed/exhibit2/800/400",
-          price: "$30",
-        },
-        {
-          id: 3,
-          title: "Pixel Perfect",
-          date: "May 1-15, 2024",
-          location: "West Wing",
-          image: "https://picsum.photos/seed/exhibit3/800/400",
-          price: "$20",
-        },
-      ]
+        const artists = await artistsRes.json()
+        const exhibitions = await exhibitionsRes.json()
+        const artworks = await artworksRes.json()
 
-      const mockFeaturedArtworks = [
-        {
-          id: 1,
-          title: "Neon Cityscape",
-          artist: "Elena Rodriguez",
-          image: "https://picsum.photos/seed/artwork1/600/400",
-          price: "$1,200",
-        },
-        {
-          id: 2,
-          title: "Pixel Forest",
-          artist: "Marcus Chen",
-          image: "https://picsum.photos/seed/artwork2/600/400",
-          price: "$800",
-        },
-        {
-          id: 3,
-          title: "Digital Waves",
-          artist: "Sarah Johnson",
-          image: "https://picsum.photos/seed/artwork3/600/400",
-          price: "$1,500",
-        },
-        {
-          id: 4,
-          title: "Cybernetic Dreams",
-          artist: "Elena Rodriguez",
-          image: "https://picsum.photos/seed/artwork4/600/400",
-          price: "$1,800",
-        },
-      ]
-
-      setFeaturedArtists(mockFeaturedArtists)
-      setUpcomingExhibitions(mockExhibitions)
-      setFeaturedArtworks(mockFeaturedArtworks)
+        setFeaturedArtists(artists)
+        setUpcomingExhibitions(exhibitions)
+        setFeaturedArtworks(artworks)
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
     }
 
     fetchData()
   }, [])
 
+  const handlePurchase = (artwork) => {
+    console.log(`Purchasing ${artwork.title} for $${artwork.price}`)
+    // Implement purchase logic here (e.g., add to cart, open modal, etc.)
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen">
-        <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10" />
-        <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
-          <source src="/videos/gallery-tour.mp4" type="video/mp4" />
-        </video>
-        <div className="relative z-20 container mx-auto px-4 h-full flex items-center">
-          <div className="max-w-2xl">
-            <h1 className="text-6xl font-bold mb-6">Digital Art Gallery</h1>
-            <p className="text-xl mb-8">Experience the future of art in our immersive digital gallery</p>
-            <div className="flex gap-4">
-              <Button size="lg" className="bg-white text-black hover:bg-gray-200" asChild>
-                <Link to="/gallery">Explore Gallery</Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-black"
-                asChild
-              >
-                <Link to="/tickets">Book Tickets</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+        
+        <section className="relative h-screen">
+         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10" />
+         <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
+           <source src="/videos/gallery-tour.mp4" type="video/mp4" />
+         </video>
+         <div className="relative z-20 container mx-auto px-4 h-full flex items-center">
+           <div className="max-w-2xl">
+             <h1 className="text-6xl font-bold mb-6">Digital Art Gallery</h1>
+             <p className="text-xl mb-8">Experience the future of art in our immersive digital gallery</p>
+             <div className="flex gap-4">
+               <Button size="lg" className="bg-white text-black hover:bg-gray-200" asChild>
+                 <Link to="/gallery">Explore Gallery</Link>
+               </Button>
+               <Button
+                 size="lg"
+                 variant="outline"
+                 className="border-white text-white hover:bg-white hover:text-black"
+                 asChild
+               >
+                 <Link to="/tickets">Book Tickets</Link>
+               </Button>
+             </div>
+           </div>
+         </div>
+       </section>
+
 
       {/* Purchase Artwork Section */}
       <section className="py-20 bg-gray-900">
@@ -156,12 +94,10 @@ const Home = () => {
                   <h3 className="text-xl font-bold mb-2">{artwork.title}</h3>
                   <p className="text-gray-400 mb-4">{artwork.artist}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">{artwork.price}</span>
-                    <Button className="bg-white text-black hover:bg-gray-200" asChild>
-                      <Link to={`/artwork/${artwork.id}`}>
-                        <ShoppingCart className="w-4 h-4 mr-2" />
-                        Purchase
-                      </Link>
+                    <span className="text-2xl font-bold">${artwork.price}</span>
+                    <Button className="bg-white text-black hover:bg-gray-200" onClick={() => handlePurchase(artwork)}>
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Purchase
                     </Button>
                   </div>
                 </div>
@@ -232,7 +168,7 @@ const Home = () => {
                             </div>
                             <div className="flex items-center gap-2">
                               <Clock className="w-4 h-4" />
-                              <span>From {exhibition.price}</span>
+                              <span>From ${exhibition.price}</span>
                             </div>
                           </div>
                           <Button className="bg-white text-black hover:bg-gray-200" asChild>

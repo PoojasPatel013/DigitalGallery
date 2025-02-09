@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "title": "Future Visions",
+      "date": "March 15-30, 2024",
+      "location": "Main Gallery Hall",
+      "image": "https://picsum.photos/seed/exhibit1/800/400",
+      "price": 25,
+      "description": "An exhibition exploring artists' interpretations of future technologies and societies."
+    },
+    {
+      "id": 2,
+      "title": "Digital Dreams",
+      "date": "April 5-20, 2024",
+      "location": "East Wing",
+      "image": "https://picsum.photos/seed/exhibit2/800/400",
+      "price": 30,
+      "description": "A showcase of surrealist digital artworks that delve into the subconscious mind."
+    },
+    {
+      "id": 3,
+      "title": "Pixel Perfect",
+      "date": "May 1-15, 2024",
+      "location": "West Wing",
+      "image": "https://picsum.photos/seed/exhibit3/800/400",
+      "price": 20,
+      "description": "Celebrating the art of pixel graphics, from retro game aesthetics to modern interpretations."
+    }
+  ]
+  

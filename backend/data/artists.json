@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "name": "Elena Rodriguez",
+      "specialty": "Digital Surrealism",
+      "image": "https://picsum.photos/seed/artist1/400/400",
+      "bio": "Creating dreamlike digital landscapes that blur the lines between reality and imagination."
+    },
+    {
+      "id": 2,
+      "name": "Marcus Chen",
+      "specialty": "Pixel Art",
+      "image": "https://picsum.photos/seed/artist2/400/400",
+      "bio": "Merging traditional pixel art techniques with modern themes to create nostalgic yet contemporary pieces."
+    },
+    {
+      "id": 3,
+      "name": "Sarah Johnson",
+      "specialty": "Abstract Digital",
+      "image": "https://picsum.photos/seed/artist3/400/400",
+      "bio": "Exploring emotions and concepts through vibrant, abstract digital compositions."
+    }
+  ]
+  

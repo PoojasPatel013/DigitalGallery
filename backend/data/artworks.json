@@ -1,0 +1,35 @@
+[
+    {
+      "id": 1,
+      "title": "Neon Cityscape",
+      "artist": "Elena Rodriguez",
+      "image": "https://picsum.photos/seed/artwork1/600/400",
+      "price": 1200,
+      "description": "A vibrant digital painting of a futuristic city at night."
+    },
+    {
+      "id": 2,
+      "title": "Pixel Forest",
+      "artist": "Marcus Chen",
+      "image": "https://picsum.photos/seed/artwork2/600/400",
+      "price": 800,
+      "description": "An intricate pixel art representation of a mystical forest."
+    },
+    {
+      "id": 3,
+      "title": "Digital Waves",
+      "artist": "Sarah Johnson",
+      "image": "https://picsum.photos/seed/artwork3/600/400",
+      "price": 1500,
+      "description": "An abstract digital artwork depicting the flow of data as waves."
+    },
+    {
+      "id": 4,
+      "title": "Cybernetic Dreams",
+      "artist": "Elena Rodriguez",
+      "image": "https://picsum.photos/seed/artwork4/600/400",
+      "price": 1800,
+      "description": "A surrealist digital artwork exploring the intersection of humanity and technology."
+    }
+  ]
+  

@@ -1,86 +1,50 @@
 const express = require("express")
-const { google } = require("googleapis")
 const cors = require("cors")
-const bodyParser = require("body-parser")
+const fs = require("fs").promises
+const path = require("path")
 
 const app = express()
+const PORT = process.env.PORT || 5000
+
 app.use(cors())
-app.use(bodyParser.json())
+app.use(express.json())
 
-// Mock database (replace with a real database in production)
-const moods = []
-const journalEntries = []
-const reminders = []
+// Helper function to read JSON files
+async function readJsonFile(filename) {
+  const filePath = path.join(__dirname, "data", filename)
+  const data = await fs.readFile(filePath, "utf8")
+  return JSON.parse(data)
+}
 
-const tips = [
-  "Take a deep breath and focus on the present moment.",
-  "Practice gratitude by listing three things you're thankful for.",
-  "Take a short walk and observe nature around you.",
-  "Do a quick body scan meditation to release tension.",
-  "Write down your thoughts and feelings for a few minutes.",
-]
-
-// Google Calendar API setup
-const calendar = google.calendar({ version: "v3", auth: process.env.GOOGLE_API_KEY })
-
-app.get("/api/mood", (req, res) => {
-  res.json(moods)
-})
-
-app.post("/api/mood", (req, res) => {
-  const { mood, date } = req.body
-  moods.push({ mood, date })
-  res.status(201).json({ message: "Mood logged successfully" })
-})
-
-app.get("/api/journal", (req, res) => {
-  res.json(journalEntries)
-})
-
-app.post("/api/journal", (req, res) => {
-  const { content, date } = req.body
-  journalEntries.push({ content, date })
-  res.status(201).json({ message: "Journal entry saved successfully" })
-})
-
-app.get("/api/tips", (req, res) => {
-  const randomTip = tips[Math.floor(Math.random() * tips.length)]
-  res.json({ tip: randomTip })
-})
-
-app.get("/api/reminders", (req, res) => {
-  res.json(reminders)
-})
-
-app.post("/api/reminders", async (req, res) => {
-  const { text, date } = req.body
-  reminders.push({ text, date })
-
+// Routes
+app.get("/api/artworks", async (req, res) => {
   try {
-    const event = {
-      summary: text,
-      start: {
-        dateTime: new Date(date).toISOString(),
-        timeZone: "America/Los_Angeles",
-      },
-      end: {
-        dateTime: new Date(new Date(date).getTime() + 30 * 60000).toISOString(),
-        timeZone: "America/Los_Angeles",
-      },
-    }
-
-    await calendar.events.insert({
-      calendarId: "primary",
-      resource: event,
-    })
-
-    res.status(201).json({ message: "Reminder created and added to Google Calendar" })
+    const artworks = await readJsonFile("artworks.json")
+    res.json(artworks)
   } catch (error) {
-    console.error("Error creating Google Calendar event:", error)
-    res.status(500).json({ message: "Error creating reminder" })
+    res.status(500).json({ message: "Error fetching artworks", error: error.message })
   }
 })
 
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.get("/api/artists", async (req, res) => {
+  try {
+    const artists = await readJsonFile("artists.json")
+    res.json(artists)
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching artists", error: error.message })
+  }
+})
+
+app.get("/api/exhibitions", async (req, res) => {
+  try {
+    const exhibitions = await readJsonFile("exhibitions.json")
+    res.json(exhibitions)
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching exhibitions", error: error.message })
+  }
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+})
 
