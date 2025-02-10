@@ -54,7 +54,7 @@ const Home = () => {
          </video>
          <div className="relative z-20 container mx-auto px-4 h-full flex items-center">
            <div className="max-w-2xl">
-             <h1 className="text-6xl font-bold mb-6">Digital Art Gallery</h1>
+             <h1 className="text-6xl font-bold mb-6">Direction Art Gallery</h1>
              <p className="text-xl mb-8">Experience the future of art in our immersive digital gallery</p>
              <div className="flex gap-4">
                <Button size="lg" className="bg-white text-black hover:bg-gray-200" asChild>

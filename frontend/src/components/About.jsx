@@ -4,7 +4,7 @@ const About = () => {
         <h1 className="text-4xl font-bold mb-8 text-center">About Digital Art Gallery</h1>
         <div className="max-w-3xl mx-auto">
           <p className="text-lg mb-6">
-            Digital Art Gallery is a cutting-edge platform dedicated to showcasing the best in digital art from around the
+            Direction Art Gallery is a cutting-edge digital platform dedicated to showcasing the best in visual and eye-appealing art from around the
             world. Our mission is to provide a space where artists can share their creations and art enthusiasts can
             explore the boundless possibilities of digital creativity.
           </p>
