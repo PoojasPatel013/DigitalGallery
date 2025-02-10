@@ -67,7 +67,7 @@ const Tickets = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <CalendarComponent
+                    <CalendarComponent className={"bg-blue-200"}
                       mode="single"
                       selected={date}
                       onSelect={setDate}
