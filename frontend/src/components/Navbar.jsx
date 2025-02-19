@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="text-white text-2xl font-bold">
-              Digital Art Gallery
+              Direction Art Gallery
             </Link>
           </div>
           <div className="hidden md:block">
@@ -22,6 +22,7 @@ const Navbar = () => {
               <NavLink to="/gallery">Gallery</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>
+              <NavLink to="/artwork/:id">Artwork</NavLink>
             </div>
           </div>
           <div className="md:hidden">
