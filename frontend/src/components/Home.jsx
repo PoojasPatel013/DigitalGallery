@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react"
+"use client"
+
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Calendar, MapPin, Clock, ShoppingCart } from "lucide-react"
@@ -6,38 +8,16 @@ import { Button } from "./ui/Button"
 import { Card, CardContent } from "./ui/Card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/Carousel"
 
-const API_URL = "https://direction-digital-art-gallery.onrender.com/api"
+import artworksData from "../data/artworks.json"
+import exhibitionsData from "../data/exhibitions.json"
+import artistsData from "../data/artists.json"
 
 const Home = () => {
-  const [featuredArtists, setFeaturedArtists] = useState([])
-  const [upcomingExhibitions, setUpcomingExhibitions] = useState([])
-  const [featuredArtworks, setFeaturedArtworks] = useState([])
+  const [featuredArtists, setFeaturedArtists] = useState(artistsData)
+  const [upcomingExhibitions, setUpcomingExhibitions] = useState(exhibitionsData)
+  const [featuredArtworks, setFeaturedArtworks] = useState(artworksData)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [artistsRes, exhibitionsRes, artworksRes] = await Promise.all([
-          fetch(`${API_URL}/artists`),
-          fetch(`${API_URL}/exhibitions`),
-          fetch(`${API_URL}/artworks`),
-        ])
-
-        const artists = await artistsRes.json()
-        const exhibitions = await exhibitionsRes.json()
-        const artworks = await artworksRes.json()
-
-        setFeaturedArtists(artists)
-        setUpcomingExhibitions(exhibitions)
-        setFeaturedArtworks(artworks)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   const handlePurchase = (artwork) => {
     console.log(`Purchasing ${artwork.title} for $${artwork.price}`)
