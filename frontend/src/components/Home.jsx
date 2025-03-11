@@ -6,7 +6,7 @@ import { Button } from "./ui/Button"
 import { Card, CardContent } from "./ui/Card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/Carousel"
 
-const API_URL = "http://localhost:5000/api"
+const API_URL = "https://direction-digital-art-gallery.onrender.com/api"
 
 const Home = () => {
   const [featuredArtists, setFeaturedArtists] = useState([])
